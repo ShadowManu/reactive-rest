@@ -3,14 +3,19 @@ import { RestConfig } from './interfaces';
 import { RxResource } from './rx-resource';
 
 export class RxRest {
-  private config: RestConfig;
+  private resources: { [name: string]: RxResource } = {};
 
-  constructor() { }
+  constructor(private defaultConfig?: RestConfig) { }
 
-  defineResource(type: string, config?: RestConfig): RxResource {
-    // TODO PLACEHOLDER
-    return new RxResource('', {});
+  defineResource(type: string, config: RestConfig = {}): RxResource {
+    return this.resources[type] = new RxResource(type, config);
   }
 
-  registerResource(resource: RxResource) { }
+  registerResource(resource: RxResource): RxResource {
+    return this.resources[resource.type] = resource;
+  }
+
+  getResource(type: string): RxResource {
+    return this.resources[type];
+  }
 }
