@@ -4,7 +4,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [ "es6" ],
-    "module": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noEmitHelpers": false,
     "noImplicitAny": false,
@@ -14,15 +14,8 @@
     "outDir": "es5",
     "sourceMap": true,
     "target": "es5",
-    "types": [],
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "types": ["jasmine"],
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/*.spec.ts"
-  ]
+  "include": ["src/**/*"]
 }
