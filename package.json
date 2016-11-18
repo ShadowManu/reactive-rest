@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/ShadowManu/rxrest#readme",
   "dependencies": {
+    "rxjs": "^5.0.0-rc.3",
     "tslint": "^3.15.1",
     "typedoc": "^0.5.1",
     "typescript": "^2.0.10"
