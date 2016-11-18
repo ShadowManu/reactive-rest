@@ -1,3 +1,7 @@
+### Custom-added Rules
+/docs/
+/es5/
+
 ### Node Gitignore Template
 # Logs
 logs
