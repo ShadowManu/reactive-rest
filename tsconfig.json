@@ -11,9 +11,10 @@
     "noImplicitReturns": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "outDir": "../dist/out-tsc",
+    "outDir": "es5",
     "sourceMap": true,
     "target": "es5",
+    "types": [],
     "typeRoots": [
       "./node_modules/@types"
     ]
