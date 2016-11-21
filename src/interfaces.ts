@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 
 export interface RestConfig {
+  baseUrl?: string;
   requester?: RequestDelegate;
 }
 

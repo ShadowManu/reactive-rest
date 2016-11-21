@@ -13,7 +13,7 @@ describe('RxRest', () => {
   });
 
   it('can define a new resource and returns it', () => {
-    let resource = rest.defineResource('users');
+    let resource = rest.defineResource<any>('users');
     expect(resource instanceof RxResource);
     expect(rest.getResource('users')).toBe(resource);
   });
