@@ -1,10 +1,11 @@
 {
   "name": "reactive-rest",
-  "version": "0.0.3-beta.1",
+  "version": "0.0.3",
   "description": "reactive configurable library for your REST communication needs",
   "main": "es5/index.js",
   "types": "es5/index.d.ts",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "tsc",
     "docs": "typedoc src --out docs/ --mode file",
     "pretest": "npm run build",
