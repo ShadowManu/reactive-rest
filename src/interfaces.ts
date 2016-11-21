@@ -5,6 +5,11 @@ export interface RestConfig {
   requester?: RequestDelegate;
 }
 
+export interface StrictRestConfig extends RestConfig {
+  baseUrl: string;
+  requester: RequestDelegate;
+}
+
 export interface RequestDelegate {
   get(url: string, args?: any): Observable<any>;
   post(url: string, body: any, args?: any): Observable<any>;
