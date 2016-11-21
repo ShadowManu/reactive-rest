@@ -28,10 +28,10 @@
     "es5"
   ],
   "dependencies": {
-    "rxjs": "5.0.0-rc.1",
+    "rxjs": "^5.0.0-rc.4",
     "tslint": "^3.15.1",
     "typedoc": "^0.5.1",
-    "typescript": "^2.0.10"
+    "typescript": "^2.1.1"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.38",
