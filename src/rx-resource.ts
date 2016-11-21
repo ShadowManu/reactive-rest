@@ -1,4 +1,4 @@
-import { RestConfig, RequestDelegate } from './interfaces';
+import { RequestDelegate, StrictRestConfig } from './interfaces';
 import { Observable } from 'rxjs';
 
 /**
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
  */
 export class RxResource<T> {
 
-  constructor(public type: string, private config: RestConfig) { }
+  constructor(public type: string, private config: StrictRestConfig) { }
 
   find(id: any): Observable<T> {
     let url = `${this.config.baseUrl}/${this.type}/${id.toString()}`;
