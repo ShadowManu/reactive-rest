@@ -1,3 +1,3 @@
-export { RestConfig } from './interfaces';
+export * from './interfaces';
 export { RxResource } from './rx-resource';
 export { RxRest } from './rx-rest';
