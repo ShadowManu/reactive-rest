@@ -1,6 +1,6 @@
 {
   "name": "reactive-rest",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "reactive configurable library for your REST communication needs",
   "main": "es5/index.js",
   "types": "es5/index.d.ts",
