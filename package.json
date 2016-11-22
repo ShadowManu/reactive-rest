@@ -9,7 +9,8 @@
     "build": "tsc",
     "docs": "typedoc src --out docs/ --mode file",
     "pretest": "npm run build",
-    "test": "node spec/jasmine-runner.js"
+    "test": "node spec/jasmine-runner.js",
+    "lint": "tslint \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
