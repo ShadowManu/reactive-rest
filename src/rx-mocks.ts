@@ -20,6 +20,7 @@ export const EXAMPLE_REQUEST_MAPS: Maps = [
 ];
 
 export class MockRequester implements RequestDelegate {
+  private hotKey: string;
 
   get(url: string, args?: any): Observable<any> {
     return asObservable(EXAMPLE_GET_RESPONSE);
@@ -30,6 +31,7 @@ export class MockRequester implements RequestDelegate {
   }
 
   patch(url: string, body: any, args?: any): Observable<any> {
+    this.hotKey = body.hotKey;
     return asObservable(assign({}, body, { patched: true }));
   }
 

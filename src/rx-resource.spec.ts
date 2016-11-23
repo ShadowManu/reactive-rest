@@ -45,4 +45,14 @@ describe('RxResource', () => {
     });
   });
 
+  it('runs the requester even when not subscribing to the resulting observable', (done) => {
+    let resource = new RxResource('users', mock.EXAMPLE_CONFIG);
+    resource.update(1, { hotKey: 'hotValue'});
+
+    setTimeout(() => {
+      expect((resource as any).config.requester.hotKey).toBe('hotValue');
+      done();
+    }, 100);
+  });
+
 });
