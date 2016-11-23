@@ -15,12 +15,32 @@ describe('RxResource', () => {
     expect(new RxResource('users', mock.EXAMPLE_CONFIG)).toBeDefined();
   });
 
-  it('can transform the response with config.responseMaps', (done) => {
-    let resource =  new RxResource('users', mock.EXAMPLE_CONFIG);
+  it('can get a resource', (done) => {
+    let resource = new RxResource('users', { requester: new mock.MockRequester() });
     let obs = resource.find('1');
 
     obs.subscribe((response: any) => {
-      expect(isMatch(response, mock.EXAMPLE_RESPONSE_MAPPED)).toBe(true);
+      expect(isMatch(response, mock.EXAMPLE_GET_RESPONSE)).toBe(true);
+      done();
+    });
+  });
+
+  it('can transform the response with config.responseMaps', (done) => {
+    let resource = new RxResource('users', mock.EXAMPLE_CONFIG);
+    let obs = resource.find('1');
+
+    obs.subscribe((response: any) => {
+      expect(isMatch(response, mock.EXAMPLE_GET_RESPONSE_MAPPED)).toBe(true);
+      done();
+    });
+  });
+
+  it('can transform the request body with config.requestMaps', (done) => {
+    let resource = new RxResource('users', mock.EXAMPLE_CONFIG);
+    let obs = resource.update(1, { some: 'prop' });
+
+    obs.subscribe((response: any) => {
+      expect(isMatch(response, { reqFun: true, reqObs: true})).toBe(true);
       done();
     });
   });

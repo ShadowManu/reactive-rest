@@ -21,5 +21,6 @@ export interface RestConfig {
 export interface StrictRestConfig extends RestConfig {
   baseUrl: string;
   requester: RequestDelegate;
+  requestMaps: Maps;
   responseMaps: Maps;
 }

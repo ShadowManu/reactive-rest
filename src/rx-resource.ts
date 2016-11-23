@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { RestConfig, StrictRestConfig } from './interfaces';
-import { mapObservable } from './helpers';
+import { mapObservable, asObservable } from './helpers';
 
 /**
  * Central Repository for RxResources
@@ -34,5 +34,19 @@ export class RxResource<T> {
 
     // Response maps
     return mapObservable(obs, this.config.responseMaps);
+  }
+
+  update(id: any, body: any): Observable<T> {
+    // Build url
+    let url = `${this.config.baseUrl}/${this.type}/${id.toString()}`;
+
+    // Request maps
+    let obs = mapObservable(asObservable(body), this.config.requestMaps);
+
+    // Make request
+    let responseObs = obs.concatMap((finalBody: any) => this.config.requester.patch(url, finalBody));
+
+    // Response maps
+    return mapObservable(responseObs, this.config.responseMaps);
   }
 }
