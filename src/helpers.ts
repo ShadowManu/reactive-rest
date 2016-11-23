@@ -1,4 +1,4 @@
-import { Observable, Subscriber } from 'rxjs';
+import { Observable } from 'rxjs';
 import { isArray } from 'lodash';
 
 import { Maps } from './interfaces';
@@ -8,7 +8,7 @@ export function isObservable(value: any): value is Observable<any> {
 }
 
 export function asObservable<T>(value: T): Observable<T> {
-  return new Observable((sub: Subscriber<T>) => { sub.next(value); sub.complete(); });
+  return Observable.from([value]);
 }
 
 export function mapObservable<T>(obs: Observable<any>, maps?: Maps): Observable<T> {
@@ -34,4 +34,14 @@ export function mapObservable<T>(obs: Observable<any>, maps?: Maps): Observable<
       }
     });
   }
+}
+
+export function debugObservable<T>(obs: Observable<T>, name: string): Observable<T> {
+  //tslint:disable
+  obs.subscribe(
+    (val: T) => { console.log(name, 'value', val); },
+    (err: any) => { console.error(name, 'error', err); },
+    () => { console.log(name, 'completed'); }
+  );
+  return obs;
 }
