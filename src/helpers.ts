@@ -7,6 +7,10 @@ export function isObservable(value: any): value is Observable<any> {
   return value && (value instanceof Observable || value.subscribe instanceof Function);
 }
 
+export function asObservable<T>(value: T): Observable<T> {
+  return new Observable((sub: Subscriber<T>) => { sub.next(value); sub.complete(); });
+}
+
 export function mapObservable<T>(obs: Observable<any>, maps?: Maps): Observable<T> {
   if (!maps) return obs;
 
@@ -26,7 +30,7 @@ export function mapObservable<T>(obs: Observable<any>, maps?: Maps): Observable<
 
       // maps returns something else
       } else {
-        return new Observable((sub: Subscriber<any>) => { sub.next(inner); sub.complete(); });
+        return asObservable(inner);
       }
     });
   }
