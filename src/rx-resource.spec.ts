@@ -52,7 +52,7 @@ describe('RxResource', () => {
     setTimeout(() => {
       expect((resource as any).config.requester.hotKey).toBe('hotValue');
       done();
-    }, 100);
+    }, 30);
   });
 
 });
