@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { assign } from 'lodash';
 
-import { RequestDelegate, StrictRestConfig, Maps } from './interfaces';
+import { RequestDelegate, StrictRestConfig, Maps, URLInput } from './interfaces';
 import { asObservable } from './helpers';
 
 export const EXAMPLE_BASE_URL = 'http://example.com';
@@ -21,8 +21,10 @@ export const EXAMPLE_REQUEST_MAPS: Maps = [
 
 export class MockRequester implements RequestDelegate {
   private hotKey: string;
+  private url: string;
 
   get(url: string, args?: any): Observable<any> {
+    this.url = url;
     return asObservable(EXAMPLE_GET_RESPONSE);
   }
 
@@ -40,9 +42,24 @@ export class MockRequester implements RequestDelegate {
   }
 }
 
+export function mockUrlBuilder({ id, type, action, baseUrl}: URLInput, args?: any) {
+  let result = `${baseUrl}/${type}`;
+
+  if (action === 'find' || action === 'update') {
+    result += '/' + id;
+  }
+
+  if (args) {
+    result += args;
+  }
+
+  return result;
+}
+
 export const EXAMPLE_CONFIG: StrictRestConfig = {
-  requester: new MockRequester(),
   baseUrl: EXAMPLE_BASE_URL,
+  urlBuilder: mockUrlBuilder,
+  requester: new MockRequester(),
   responseMaps: EXAMPLE_RESPONSE_MAPS,
   requestMaps: EXAMPLE_REQUEST_MAPS
 };

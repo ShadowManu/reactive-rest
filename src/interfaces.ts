@@ -12,14 +12,32 @@ export type MapFunction = (value: any) => any;
 export type MapObservable = (value: any) => Observable<any>
 export type Maps = MapFunction | MapObservable | (MapFunction | MapObservable)[];
 
+export type Action = 'find' | 'findAll' | 'update';
+
+export interface URLInput {
+  id?: any;
+  type: string;
+  action: Action;
+  baseUrl: string;
+}
+
+export interface MethodArgs {
+  url?: any;
+}
+
+export type URLBuilder = (input: URLInput, args?: any) => string;
+
 export interface RestConfig {
   baseUrl?: string;
+  urlBuilder?: URLBuilder;
   requester?: RequestDelegate;
-  responseMaps?: MapFunction | MapFunction[];
+  requestMaps?: Maps;
+  responseMaps?: Maps;
 }
 
 export interface StrictRestConfig extends RestConfig {
   baseUrl: string;
+  urlBuilder: URLBuilder;
   requester: RequestDelegate;
   requestMaps: Maps;
   responseMaps: Maps;

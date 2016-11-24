@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { RestConfig, StrictRestConfig } from './interfaces';
+import { RestConfig, StrictRestConfig, MethodArgs } from './interfaces';
 import { mapObservable, asObservable } from './helpers';
 
 /**
@@ -14,9 +14,9 @@ export class RxResource<T> {
     this.config = config as any;
   }
 
-  find(id: any): Observable<T> {
+  find(id: any, args: MethodArgs = {}): Observable<T> {
     // Build url
-    let url = `${this.config.baseUrl}/${this.type}/${id.toString()}`;
+    let url = this.config.urlBuilder({ id, type: this.type, action: 'find', baseUrl: this.config.baseUrl }, args.url);
 
     // Make request
     let obs = this.config.requester.get(url);
@@ -25,9 +25,9 @@ export class RxResource<T> {
     return mapObservable(obs, this.config.responseMaps);
   }
 
-  findAll(): Observable<T[]> {
+  findAll(args: MethodArgs = {}): Observable<T[]> {
     // Build url
-    let url = `${this.config.baseUrl}/${this.type}`;
+    let url = this.config.urlBuilder({ type: this.type, action: 'findAll', baseUrl: this.config.baseUrl }, args.url);
 
     // Make request
     let obs = this.config.requester.get(url);
@@ -36,9 +36,9 @@ export class RxResource<T> {
     return mapObservable(obs, this.config.responseMaps);
   }
 
-  update(id: any, body: any): Observable<T> {
+  update(id: any, body: any, args: MethodArgs = {}): Observable<T> {
     // Build url
-    let url = `${this.config.baseUrl}/${this.type}/${id.toString()}`;
+    let url = this.config.urlBuilder({ id, type: this.type, action: 'update', baseUrl: this.config.baseUrl }, args.url);
 
     // Request maps
     let requestMapped = mapObservable(asObservable(body), this.config.requestMaps);
