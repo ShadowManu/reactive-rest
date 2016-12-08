@@ -77,8 +77,9 @@ export class RxResource<T> {
   }
 
   applyMethod(id: any, method: string, args: MethodArgs = {}): Observable<T> {
+
     // Build url
-    let url = this.config.urlBuilder({ id, type: this.type, action: 'find', baseUrl: this.config.baseUrl }, args.url);
+    let url = this.config.urlBuilder({ id, type: this.type, method, action: 'find', baseUrl: this.config.baseUrl }, args.url);
 
     // Make request
     let obs = this.config.requester.post(url, '');
