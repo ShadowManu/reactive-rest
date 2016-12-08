@@ -74,4 +74,18 @@ describe('RxResource', () => {
 
   });
 
+  describe('create', () => {
+
+    it('can post a resource', (done) => {
+      let res = new RxResource('users', { requester: new mock.MockRequester(), urlBuilder: mock.mockUrlBuilder });
+      let obs = res.create({ some: 'res' });
+
+      obs.subscribe((response: any) => {
+        expect(isMatch(response, mock.EXAMPLE_GET_RESPONSE)).toBe(true);
+        done();
+      });
+    });
+
+  });
+
 });
