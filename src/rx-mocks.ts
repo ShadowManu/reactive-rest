@@ -43,7 +43,7 @@ export class MockRequester implements RequestDelegate {
   }
 }
 
-export function mockUrlBuilder({ id, type, action, baseUrl, method}: URLInput, args?: any) {
+export function mockUrlBuilder({ id, type, action, baseUrl}: URLInput, args?: any) {
   let result = `${baseUrl}/${type}`;
 
   if (action === 'find' || action === 'update') {
@@ -52,10 +52,6 @@ export function mockUrlBuilder({ id, type, action, baseUrl, method}: URLInput, a
 
   if (args) {
     result += args;
-  }
-
-  if (method) {
-    result += method;
   }
 
   return result;

@@ -12,7 +12,7 @@ export type MapFunction = (value: any) => any;
 export type MapObservable = (value: any) => Observable<any>
 export type Maps = MapFunction | MapObservable | (MapFunction | MapObservable)[];
 
-export type Action = 'find' | 'findAll' | 'update' | 'create' | 'apply';
+export type Action = 'find' | 'findAll' | 'update' | 'create';
 
 export interface URLInput {
   id?: any;
