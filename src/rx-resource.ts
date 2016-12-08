@@ -56,15 +56,24 @@ export class RxResource<T> {
     return replayer;
   }
 
-  applyMethod(id: any, method: string, args: MethodArgs = {}): Observable<T> {
-
+  create(body: any, args: MethodArgs = {}): Observable<T> {
     // Build url
-    let url = this.config.urlBuilder({ id, type: this.type, method, action: 'find', baseUrl: this.config.baseUrl }, args.url);
+    let url = this.config.urlBuilder({ type: this.type, action: 'create', baseUrl: this.config.baseUrl }, args.url);
+
+    // Request maps
+    let requestMapped = mapObservable(asObservable(body), this.config.requestMaps);
 
     // Make request
-    let obs = this.config.requester.post(url, '');
+    let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.post(url, finalBody));
 
     // Response maps
-    return mapObservable(obs, this.config.responseMaps);
+    let responseMapped = mapObservable(requested, this.config.responseMaps);
+
+    // Make Observable code strict, saving the last result
+    let replayer = responseMapped.publishReplay(1);
+    replayer.connect();
+
+    // Response maps
+    return replayer;
   }
 }

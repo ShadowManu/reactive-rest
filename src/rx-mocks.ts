@@ -29,6 +29,7 @@ export class MockRequester implements RequestDelegate {
   }
 
   post(url: string, body: any, args?: any): Observable<any> {
+    this.url = url;
     return asObservable(EXAMPLE_GET_RESPONSE);
   }
 
@@ -42,7 +43,7 @@ export class MockRequester implements RequestDelegate {
   }
 }
 
-export function mockUrlBuilder({ id, type, action, baseUrl}: URLInput, args?: any) {
+export function mockUrlBuilder({ id, type, action, baseUrl, method}: URLInput, args?: any) {
   let result = `${baseUrl}/${type}`;
 
   if (action === 'find' || action === 'update') {
@@ -51,6 +52,10 @@ export function mockUrlBuilder({ id, type, action, baseUrl}: URLInput, args?: an
 
   if (args) {
     result += args;
+  }
+
+  if (method) {
+    result += method;
   }
 
   return result;
