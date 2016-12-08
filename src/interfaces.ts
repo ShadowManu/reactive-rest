@@ -18,7 +18,6 @@ export interface URLInput {
   id?: any;
   type: string;
   action: Action;
-  method?: string;
   baseUrl: string;
 }
 

@@ -29,7 +29,6 @@ export class MockRequester implements RequestDelegate {
   }
 
   post(url: string, body: any, args?: any): Observable<any> {
-    this.url = url;
     return asObservable(EXAMPLE_GET_RESPONSE);
   }
 
