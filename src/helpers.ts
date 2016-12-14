@@ -16,8 +16,10 @@ export function mapObservable<T>(obs: Observable<any>, maps?: Maps): Observable<
 
   // When passing an array, map the first and use recursion for the others
   if (isArray(maps)) {
-    let [firstMap, otherMaps] = maps;
-    return mapObservable(mapObservable(obs, firstMap), otherMaps);
+    let [firstMap, ...otherMaps] = maps;
+    return (otherMaps.length === 0)
+      ? mapObservable(obs, firstMap)
+      : mapObservable(mapObservable(obs, firstMap), otherMaps);
 
   // Otherwise, handle the base case
   } else {

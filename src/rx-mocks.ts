@@ -7,11 +7,12 @@ import { asObservable } from './helpers';
 export const EXAMPLE_BASE_URL = 'http://example.com';
 
 export const EXAMPLE_GET_RESPONSE: any = { id: '1' };
-export const EXAMPLE_GET_RESPONSE_MAPPED: any = { id: '1', resFun: true, resObs: true };
+export const EXAMPLE_GET_RESPONSE_MAPPED: any = { id: '1', resFun: true, resObs: true, resObs2: true };
 
 export const EXAMPLE_RESPONSE_MAPS: Maps = [
   (input: any) => assign({}, input, { resFun: true }),
-  (input: any) => asObservable(assign({}, input, { resObs: true }))
+  (input: any) => asObservable(assign({}, input, { resObs: true })),
+  (input: any) => asObservable(assign({}, input, { resObs2: true }))
 ];
 
 export const EXAMPLE_REQUEST_MAPS: Maps = [
