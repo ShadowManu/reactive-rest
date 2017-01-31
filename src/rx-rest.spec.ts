@@ -27,4 +27,13 @@ describe('RxRest', () => {
     expect(rest.getResource('users')).toBe(resource);
   });
 
+  it('can transform the resource when defining it', () => {
+    let transform = (resource: RxResource<any>) => { return 'it works!'; };
+
+    let resource = rest.defineResource<any>('users', undefined, transform);
+
+    expect(resource).toBe('it works!');
+    expect(rest.getResource('users')).toBe('it works!');
+  });
+
 });
