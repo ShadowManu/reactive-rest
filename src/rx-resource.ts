@@ -76,4 +76,19 @@ export class RxResource<T> {
     // Response maps
     return replayer;
   }
+
+  delete(id: any, args: MethodArgs = {}): Observable<any> {
+    // Build url
+    let url = this.config.urlBuilder({ type: this.type, action: 'create', baseUrl: this.config.baseUrl }, args.url);
+
+    // Make request
+    let requested = this.config.requester.delete(url);
+
+    // Make Observable code strict, saving the last result
+    let replayer = requested.publishReplay(1);
+    replayer.connect();
+
+    // Response maps
+    return replayer;
+  }
 }

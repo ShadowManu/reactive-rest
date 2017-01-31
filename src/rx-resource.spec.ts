@@ -88,4 +88,16 @@ describe('RxResource', () => {
 
   });
 
+  describe('delete', () => {
+
+    it('should delete', (done) => {
+      expect((resource as any).config.requester.deleted).toBe(false);
+
+      resource.delete('5').subscribe(() => {
+        expect((resource as any).config.requester.deleted).toBe(true);
+        done();
+      });
+    });
+  });
+
 });

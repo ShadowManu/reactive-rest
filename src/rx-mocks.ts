@@ -21,8 +21,9 @@ export const EXAMPLE_REQUEST_MAPS: Maps = [
 ];
 
 export class MockRequester implements RequestDelegate {
-  private hotKey: string;
-  private url: string;
+  public hotKey: string;
+  public url: string;
+  public deleted: boolean = false;
 
   get(url: string, args?: any): Observable<any> {
     this.url = url;
@@ -39,6 +40,7 @@ export class MockRequester implements RequestDelegate {
   }
 
   delete(url: string, args?: any): Observable<any> {
+    this.deleted = true;
     return asObservable(undefined);
   }
 }
