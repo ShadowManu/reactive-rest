@@ -16,7 +16,7 @@
  *   - Replace other values
  */
 
-import { has, isNil, isArray, isObject, isString, mergeWith } from 'lodash';
+import { has, isNil, isArray, isObject, isString, mapValues, mergeWith } from 'lodash';
 
 // Type definitions
 export type Mix<T> = { combine: T };
@@ -26,8 +26,8 @@ export type Combine<T> = Mix<T> | Replace<T>
 export type Append<T> = (a: T, b: T) => T;
 
 /** Typescript type guard to identify 'type constructor' */
-export function isMix<T>(arg: Combine<T>): arg is Mix<T> {
-  return has(arg, 'combine');
+export function isMix<T>(value: Combine<T>): value is Mix<T> {
+  return has(value, 'combine');
 }
 
 /** Make a value combinable */
@@ -35,16 +35,24 @@ export function toCombine<T>(value: T): Combine<T> {
   return { combine: value };
 }
 
-/** Extract the raw object from the Combine value */
-export function fromCombine<T>(arg: Combine<T>): T {
-  return isMix(arg) ? arg.combine : arg;
+/** Extract the raw object from the Combine value,
+ *  by default, it will navigate object properties
+ */
+export function fromCombine<T>(value: Combine<T>, { recursive } = { recursive: true }): T {
+  if (isMix(value)) return fromCombine(value.combine, { recursive });
+
+  if (recursive && isObject(value)) return mapValues(value, (val) => fromCombine(val, { recursive }));
+
+  return value;
 }
 
 /** Typeclass core function to combine values */
 export function combine<T>(a: Combine<T>, b: Combine<T>, append: Append<T> = genericAppend): Combine<T> {
   return (isMix(a) && isMix(b)) ?
-    toCombine(append(fromCombine(a), fromCombine(b))) :
-    b;
+    toCombine(append(
+      fromCombine(a, { recursive: false }),
+      fromCombine(b, { recursive: false }))
+    ) : b;
 }
 
 /** Generic (default) monoidal append, combine-aware */
