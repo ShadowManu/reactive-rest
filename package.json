@@ -32,15 +32,15 @@
   ],
   "dependencies": {
     "lodash": "^4.17.2",
-    "tslint": "^3.15.1",
-    "typedoc": "^0.5.1",
-    "typescript": "^2.1.1"
+    "rxjs": "^5.0.0-rc.4"
   },
   "devDependencies": {
     "@types/jasmine": "^2.5.38",
     "jasmine": "^2.5.2",
     "jasmine-spec-reporter": "^2.7.0",
-    "rxjs": "^5.0.0-rc.4"
+    "tslint": "^3.15.1",
+    "typedoc": "^0.5.1",
+    "typescript": "^2.1.1"
   },
   "peerDependencies": {
     "rxjs": "^5.0.0-rc.4"
