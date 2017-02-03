@@ -68,7 +68,7 @@ describe('combine', () => {
 
     it('should remove combine wrappers', expectFromCombine([
       { val: { combine: 4 }, exp: 4 },
-      { val: { combine: [5, 6] }, exp: [5, 6] },
+      { val: { combine: [5, 6] }, exp: [5, 6] }
     ]));
 
     it('should remove combine wrappers recursively', expectFromCombine([
