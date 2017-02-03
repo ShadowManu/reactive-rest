@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { assign } from 'lodash';
 
 import { RequestDelegate, StrictRestConfig, Maps, URLInput } from './interfaces';
-import { asObservable } from './helpers';
+import { asObservable } from './utils/helpers';
 
 export const EXAMPLE_BASE_URL = 'http://example.com';
 

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { RestConfig, StrictRestConfig, MethodArgs } from './interfaces';
-import { mapObservable, asObservable } from './helpers';
+import { mapObservable, asObservable } from './utils/helpers';
 
 /**
  * Central Repository for RxResources
