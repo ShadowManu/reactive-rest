@@ -64,5 +64,6 @@ export const EXAMPLE_CONFIG: StrictRestConfig = {
   urlBuilder: mockUrlBuilder,
   requester: new MockRequester(),
   responseMaps: EXAMPLE_RESPONSE_MAPS,
-  requestMaps: EXAMPLE_REQUEST_MAPS
+  requestMaps: EXAMPLE_REQUEST_MAPS,
+  defaultUrl: {}
 };

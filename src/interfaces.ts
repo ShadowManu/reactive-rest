@@ -33,6 +33,7 @@ export interface RestConfig {
   requester?: RequestDelegate;
   requestMaps?: Maps;
   responseMaps?: Maps;
+  defaultUrl?: { [method: string]: MethodArgs };
 }
 
 export interface StrictRestConfig extends RestConfig {
@@ -41,4 +42,5 @@ export interface StrictRestConfig extends RestConfig {
   requester: RequestDelegate;
   requestMaps: Maps;
   responseMaps: Maps;
+  defaultUrl: { [method: string]: MethodArgs };
 }

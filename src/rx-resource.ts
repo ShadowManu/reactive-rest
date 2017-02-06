@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 
 import { RestConfig, StrictRestConfig, MethodArgs } from './interfaces';
 import { mapObservable, asObservable } from './utils/helpers';
+import { fullCombine } from './utils/combine';
 
 /**
  * Central Repository for RxResources
@@ -27,7 +28,8 @@ export class RxResource<T> {
 
   findAll(args: MethodArgs = {}): Observable<T[]> {
     // Build url
-    let url = this.config.urlBuilder({ type: this.type, action: 'findAll', baseUrl: this.config.baseUrl }, args.url);
+    let methodArgs = fullCombine(this.config.defaultUrl && this.config.defaultUrl['findAll'], args.url);
+    let url = this.config.urlBuilder({ type: this.type, action: 'findAll', baseUrl: this.config.baseUrl }, methodArgs);
 
     // Make request
     let obs = this.config.requester.get(url);
