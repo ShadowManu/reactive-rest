@@ -16,7 +16,7 @@
  *   - Replace other values
  */
 
-import { has, isNil, isArray, isObject, isString, mapValues, mergeWith } from 'lodash';
+import { has, isNil, isArray, isString, mapValues, mergeWith } from 'lodash';
 
 // Type definitions
 export type Mix<T> = { combine: T };
@@ -31,19 +31,31 @@ export function isMix<T>(value: Combine<T>): value is Mix<T> {
 }
 
 /** Make a value combinable */
-export function toCombine<T>(value: T): Combine<T> {
+export function toCombine<T>(value: T, { recursive } = { recursive: true }): Combine<T> {
+  if (recursive && isSimpleObject(value))
+    return { combine: mapValues(value, (val) => toCombine(val, { recursive })) };
+
   return { combine: value };
 }
 
-/** Extract the raw object from the Combine value,
+/**
+ * Extract the raw object from the Combine value,
  *  by default, it will navigate object properties
  */
 export function fromCombine<T>(value: Combine<T>, { recursive } = { recursive: true }): T {
   if (isMix(value)) return fromCombine(value.combine, { recursive });
 
-  if (recursive && isObject(value)) return mapValues(value, (val) => fromCombine(val, { recursive }));
+  if (recursive && isSimpleObject(value)) return mapValues(value, (val) => fromCombine(val, { recursive }));
 
   return value;
+}
+
+/**
+ * Utility function to fully combine two values.
+ * Very similar to lodash.mergeDeep, but following the rules described at the header
+ */
+export function fullCombine(a, b) {
+  return fromCombine(combine(toCombine(a), toCombine(b)));
 }
 
 /** Typeclass core function to combine values */
@@ -51,8 +63,8 @@ export function combine<T>(a: Combine<T>, b: Combine<T>, append: Append<T> = gen
   return (isMix(a) && isMix(b)) ?
     toCombine(append(
       fromCombine(a, { recursive: false }),
-      fromCombine(b, { recursive: false }))
-    ) : b;
+      fromCombine(b, { recursive: false })
+    ), { recursive: false }) : b;
 }
 
 /** Generic (default) monoidal append, combine-aware */
@@ -70,9 +82,15 @@ function genericAppend<T>(a: T, b: T): T {
     return a.concat(b) as any;
   }
 
-  if (isObject(a) && isObject(b)) {
+  if (isSimpleObject(a) && isSimpleObject(b)) {
     return mergeWith({}, a, b, (subA, subB) => combine(subA, subB));
   }
 
   return b;
+}
+
+// Helper functions
+
+function isSimpleObject(value: any): boolean {
+  return !!value && value.constructor === Object;
 }
