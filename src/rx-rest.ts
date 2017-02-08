@@ -6,26 +6,26 @@ import { fromCombine, toCombine, combine } from './utils/combine';
 import { identity } from 'lodash';
 
 export class RxRest {
-  private resources: { [name: string]: RxResource<any> } = {};
+  private resources: { [name: string]: RxResource<any, any> } = {};
 
   constructor(private defaultConfig: RestConfig = {}) { }
 
-  defineResource<T>(type: string, config: RestConfig = {}, transform: Function = identity): RxResource<T> {
+  defineResource<T, U>(type: string, config: RestConfig = {}, transform: Function = identity): RxResource<T, U> {
 
     let merge: RestConfig = fromCombine(combine(toCombine(this.defaultConfig), { combine: config }));
 
     if (!merge.requester) throw CustomError(CODE.REST_DEFINE_REQUEST_NOT_FOUND);
     if (!merge.baseUrl) throw CustomError(CODE.REST_DEFINE_BASE_URL_NOT_FOUND);
 
-    let resource = new RxResource<T>(type, merge as StrictRestConfig);
+    let resource = new RxResource<T, U>(type, merge as StrictRestConfig);
     return this.resources[type] = transform(resource);
   }
 
-  registerResource<T>(resource: RxResource<T>): RxResource<T> {
+  registerResource<T, U>(resource: RxResource<T, U>): RxResource<T, U> {
     return this.resources[resource.type] = resource;
   }
 
-  getResource<T>(type: string): RxResource<T> {
+  getResource<T, U>(type: string): RxResource<T, U> {
     return this.resources[type];
   }
 }

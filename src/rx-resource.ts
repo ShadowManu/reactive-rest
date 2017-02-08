@@ -7,7 +7,7 @@ import { fullCombine } from './utils/combine';
 /**
  * Central Repository for RxResources
  */
-export class RxResource<T> {
+export class RxResource<T, U> {
   private config: StrictRestConfig;
 
   constructor(public type: string, config: RestConfig) {
@@ -26,7 +26,7 @@ export class RxResource<T> {
     return mapObservable(obs, this.config.responseMaps);
   }
 
-  findAll(args: MethodArgs = {}): Observable<T[]> {
+  findAll(args: MethodArgs = {}): Observable<U> {
     // Build url
     let methodArgs = fullCombine(this.config.defaultUrl && this.config.defaultUrl['findAll'], args.url);
     let url = this.config.urlBuilder({ type: this.type, action: 'findAll', baseUrl: this.config.baseUrl }, methodArgs);
@@ -79,7 +79,7 @@ export class RxResource<T> {
     return replayer;
   }
 
-  delete(id: any, args: MethodArgs = {}): Observable<any> {
+  delete(id: any, args: MethodArgs = {}): Observable<void> {
     // Build url
     let url = this.config.urlBuilder({ type: this.type, action: 'create', baseUrl: this.config.baseUrl }, args.url);
 

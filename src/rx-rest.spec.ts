@@ -14,7 +14,7 @@ describe('RxRest', () => {
   });
 
   it('can define a new resource with default configuration and returns it', () => {
-    let resource = rest.defineResource<any>('users');
+    let resource = rest.defineResource<any, any[]>('users');
 
     expect(resource instanceof RxResource);
     expect(rest.getResource('users')).toBe(resource);
@@ -28,9 +28,9 @@ describe('RxRest', () => {
   });
 
   it('can transform the resource when defining it', () => {
-    let transform = (resource: RxResource<any>) => { return 'it works!'; };
+    let transform = (resource: RxResource<any, any[]>) => { return 'it works!'; };
 
-    let resource = rest.defineResource<any>('users', undefined, transform);
+    let resource = rest.defineResource<any, any[]>('users', undefined, transform);
 
     expect(resource).toBe('it works!');
     expect(rest.getResource('users')).toBe('it works!');
