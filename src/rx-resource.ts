@@ -81,7 +81,7 @@ export class RxResource<T, U> {
 
   delete(id: any, args: MethodArgs = {}): Observable<void> {
     // Build url
-    let url = this.config.urlBuilder({ type: this.type, action: 'create', baseUrl: this.config.baseUrl }, args.url);
+    let url = this.config.urlBuilder({ id, type: this.type, action: 'delete', baseUrl: this.config.baseUrl }, args.url);
 
     // Make request
     let requested = this.config.requester.delete(url);
