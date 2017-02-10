@@ -1,6 +1,7 @@
 ### Custom-added Rules
 /docs/
 /es5/
+.vscode
 
 ### Node Gitignore Template
 # Logs

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { isArray } from 'lodash';
 
-import { Maps } from './interfaces';
+import { Maps } from '../interfaces';
 
 export function isObservable(value: any): value is Observable<any> {
   return value && (value instanceof Observable || value.subscribe instanceof Function);

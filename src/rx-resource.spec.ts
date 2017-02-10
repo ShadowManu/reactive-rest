@@ -6,7 +6,7 @@ import * as mock from './rx-mocks';
 
 describe('RxResource', () => {
   let rest: RxRest;
-  let resource = new RxResource<any>('users', mock.EXAMPLE_CONFIG);
+  let resource = new RxResource<any, any[]>('users', mock.EXAMPLE_CONFIG);
 
   beforeEach(() => {
     rest = new RxRest();
