@@ -32,8 +32,8 @@ describe('RxRest', () => {
 
     let resource = rest.defineResource<any, any[]>('users', undefined, transform);
 
-    expect(resource).toBe('it works!');
-    expect(rest.getResource('users')).toBe('it works!');
+    expect<any>(resource).toBe('it works!');
+    expect<any>(rest.getResource('users')).toBe('it works!');
   });
 
 });

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { RestConfig, StrictRestConfig, MethodArgs } from './interfaces';
-import { mapObservable, asObservable } from './utils/helpers';
+import { mapObservable } from './utils/helpers';
 import { fullCombine } from './utils/combine';
 
 /**
@@ -43,7 +43,7 @@ export class RxResource<T, U> {
     let url = this.config.urlBuilder({ id, type: this.type, action: 'update', baseUrl: this.config.baseUrl }, args.url);
 
     // Request maps
-    let requestMapped = mapObservable(asObservable(body), this.config.requestMaps);
+    let requestMapped = mapObservable(Observable.of(body), this.config.requestMaps);
 
     // Make request
     let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.patch(url, finalBody));
@@ -63,7 +63,7 @@ export class RxResource<T, U> {
     let url = this.config.urlBuilder({ type: this.type, action: 'create', baseUrl: this.config.baseUrl }, args.url);
 
     // Request maps
-    let requestMapped = mapObservable(asObservable(body), this.config.requestMaps);
+    let requestMapped = mapObservable(Observable.of(body), this.config.requestMaps);
 
     // Make request
     let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.post(url, finalBody));
@@ -79,15 +79,21 @@ export class RxResource<T, U> {
     return replayer;
   }
 
-  delete(id: any, args: MethodArgs = {}): Observable<void> {
+  delete(id: any, body?: any, args: MethodArgs = {}): Observable<any> {
     // Build url
     let url = this.config.urlBuilder({ id, type: this.type, action: 'delete', baseUrl: this.config.baseUrl }, args.url);
 
+    // Request maps
+    let requestMapped = mapObservable(Observable.of(body), this.config.requestMaps);
+
     // Make request
-    let requested = this.config.requester.delete(url);
+    let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.delete(url, { body: finalBody }));
+
+    // Response maps
+    let responseMapped = mapObservable(requested, this.config.responseMaps);
 
     // Make Observable code strict, saving the last result
-    let replayer = requested.publishReplay(1);
+    let replayer = responseMapped.publishReplay(1);
     replayer.connect();
 
     // Response maps
