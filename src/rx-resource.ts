@@ -1,4 +1,7 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/publishReplay';
 
 import { RestConfig, StrictRestConfig, MethodArgs } from './interfaces';
 import { mapObservable } from './utils/helpers';
@@ -41,7 +44,7 @@ export class RxResource<T, U> {
     let url = this.config.urlBuilder({ id, type: this.type, action: 'update', baseUrl: this.config.baseUrl }, args.url);
 
     // Request maps
-    let requestMapped = mapObservable(Observable.of(body), this.config.requestMaps);
+    let requestMapped = mapObservable(of(body), this.config.requestMaps);
 
     // Make request
     let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.patch(url, finalBody));
@@ -61,7 +64,7 @@ export class RxResource<T, U> {
     let url = this.config.urlBuilder({ type: this.type, action: 'create', baseUrl: this.config.baseUrl }, args.url);
 
     // Request maps
-    let requestMapped = mapObservable(Observable.of(body), this.config.requestMaps);
+    let requestMapped = mapObservable(of(body), this.config.requestMaps);
 
     // Make request
     let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.post(url, finalBody));
@@ -82,7 +85,7 @@ export class RxResource<T, U> {
     let url = this.config.urlBuilder({ id, type: this.type, action: 'delete', baseUrl: this.config.baseUrl }, args.url);
 
     // Request maps
-    let requestMapped = mapObservable(Observable.of(body), this.config.requestMaps);
+    let requestMapped = mapObservable(of(body), this.config.requestMaps);
 
     // Make request
     let requested = requestMapped.concatMap((finalBody: any) => this.config.requester.delete(url, { body: finalBody }));

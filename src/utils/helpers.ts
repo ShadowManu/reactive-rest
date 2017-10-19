@@ -1,4 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+
 import { isArray } from 'lodash';
 
 import { Maps } from '../interfaces';
@@ -28,7 +30,7 @@ export function mapObservable<T = any>(obs: Observable<any>, maps?: Maps): Obser
 
       // maps returns something else
       } else {
-        return Observable.of(inner);
+        return of(inner);
       }
     });
   }

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 export interface RequestDelegate {
   get(url: string, args?: any): Observable<any>;
@@ -9,7 +9,7 @@ export interface RequestDelegate {
 }
 
 export type MapFunction = (value: any) => any;
-export type MapObservable = (value: any) => Observable<any>
+export type MapObservable = (value: any) => Observable<any>;
 export type Maps = MapFunction | MapObservable | (MapFunction | MapObservable)[];
 
 export type Action = 'find' | 'findAll' | 'update' | 'create' | 'delete';
