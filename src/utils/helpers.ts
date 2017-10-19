@@ -7,7 +7,7 @@ export function isObservable(value: any): value is Observable<any> {
   return value && (value instanceof Observable || value.subscribe instanceof Function);
 }
 
-export function mapObservable<T>(obs: Observable<any>, maps?: Maps): Observable<T> {
+export function mapObservable<T = any>(obs: Observable<any>, maps?: Maps): Observable<T> {
   if (!maps) return obs;
 
   // When passing an array, map the first and use recursion for the others
